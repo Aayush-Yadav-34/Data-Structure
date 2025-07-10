@@ -54,7 +54,7 @@ class GraphTraversalGUI:
         self.node_entry = ttk.Entry(node_input_frame, width=15)
         self.node_entry.pack(side=tk.LEFT, padx=2)
         self.node_entry.pack(fill=tk.X, pady=2)
-        self.node_entry.insert(0, "Home,W.E. Highway,Left SR Road,Subway Tunnel,Service RD,Ashok Heights,Nicolas Rd,Left RD,Straight,Nagardas Rd,MVLU,BUS Stop,Kaatyani Heights,Jijamata RD")
+        self.node_entry.insert(0, "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z")
         ttk.Button(node_input_frame, text="Add Node", command=self.add_node).pack(side=tk.LEFT, padx=2)
         ttk.Button(node_input_frame, text="Remove Node", command=self.remove_node).pack(side=tk.LEFT, padx=2)
 
@@ -65,7 +65,7 @@ class GraphTraversalGUI:
         self.edge_entry = ttk.Entry(edge_input_frame, width=15)
         self.edge_entry.pack(side=tk.LEFT, padx=2)
         self.edge_entry.pack(fill=tk.X, pady=2)
-        self.edge_entry.insert(0, "Home-W.E. Highway,W.E. Highway-Left SR Road,Left SR Road-Subway Tunnel,Subway Tunnel-Ashok Heights,Ashok Heights-Nicolas Rd,Nicolas Rd-Left RD,Left RD-Straight,Straight-Nagardas Rd,Nagardas Rd-MVLU,Left SR Road-Service RD,Service RD-BUS Stop,BUS Stop-Kaatyani Heights,Kaatyani Heights-Nagardas Rd,Service RD-Jijamata RD,Jijamata RD-Ashok Heights")
+        self.edge_entry.insert(0, "A-B,B-C,C-D,D-E,E-F,E-P,F-G,P-G,G-H,G-X,H-I,H-Z,B-O,B-R,K-L,A-K,L-R,K-J,J-Q,J-S,J-Y,Q-T,Y-T,Y-W,W-A,T-M,T-U,U-N,N-V")
         ttk.Button(edge_input_frame, text="Add Edge", command=self.add_edge).pack(side=tk.LEFT, padx=2)
         ttk.Button(edge_input_frame, text="Remove Edge", command=self.remove_edge).pack(side=tk.LEFT, padx=2)
 
@@ -143,15 +143,6 @@ class GraphTraversalGUI:
         # Graphviz image label (for direct display)
         self.graph_img_label = tk.Label(right_frame)
         self.graph_img_label.pack(fill=tk.BOTH, expand=True)
-
-        # Remove matplotlib figure and canvas setup
-        # self.fig, (self.ax1, self.ax2) = plt.subplots(1, 2, figsize=(12, 6))
-        # self.fig.suptitle("Algorithm Comparison")
-        # self.canvas = FigureCanvasTkAgg(self.fig, right_frame)
-        # self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
-
-        # Remove the old Create Graph button and bulk entry fields
-        # ttk.Button(graph_frame, text="Create Graph", command=self.create_graph).pack(pady=5)
         
     def visualize_graph(self, bfs_visited=None, dfs_visited=None, bfs_current=None, dfs_current=None):
         """Visualize the graph using Graphviz and display in the main interface"""
@@ -168,7 +159,7 @@ class GraphTraversalGUI:
                 color = 'lightcoral'
             dot.node(node, style='filled', fillcolor=color)
         for u, v in self.graph.edges():
-            dot.edge(u, v)
+            dot.edge(u, v, arrowhead='none')
         img_bytes = dot.pipe(format='png')
         image = Image.open(io.BytesIO(img_bytes))
         image = image.resize((700, 600), Image.LANCZOS)
